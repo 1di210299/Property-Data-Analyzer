@@ -29,8 +29,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 as_of_date = "2024-09-29"
-username = "juand.gutierrezc@pucp.edu.pe"
-hash_value = "nD//knBIwro2FUfalitGfXQoCJL8YNZmDIEWwHAo3ik="
+username = "xxx"
+hash_value = "xxx"
 
 headers = {
     "username": username,
