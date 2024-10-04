@@ -1,88 +1,100 @@
-Property Data Analyzer
-This project is a comprehensive Python script to scrape property data from homes.com, geocode property addresses, match them with broadband availability data, and identify nearby amenities such as Starbucks locations and schools. The final result is an analysis file that can be sent to an email.
 
-Overview
+
+# Property Data Analyzer
+
+This project is a comprehensive Python script to scrape property data from `homes.com`, geocode property addresses, match them with broadband availability data, and identify nearby amenities such as Starbucks locations and schools. The final result is an analysis file that can be sent to an email.
+
+## Overview
+
 The main objectives of this project are:
+- Scrape property listings for selected cities in North Carolina.
+- Download broadband availability data from the FCC API.
+- Geocode the properties' addresses.
+- Match each property with available internet providers and their speeds.
+- Identify nearby amenities (Starbucks and schools) using Overpass API.
+- Send the final results via email as an attached CSV file.
 
-Scrape property listings for selected cities in North Carolina.
-Download broadband availability data from the FCC API.
-Geocode the properties' addresses.
-Match each property with available internet providers and their speeds.
-Identify nearby amenities (Starbucks and schools) using Overpass API.
-Send the final results via email as an attached CSV file.
-Table of Contents
-Prerequisites
-Setup and Installation
-Configuration
-Usage
-Script Details
-Notes
-License
-Prerequisites
+## Table of Contents
+- [Prerequisites](#prerequisites)
+- [Setup and Installation](#setup-and-installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [Script Details](#script-details)
+- [Notes](#notes)
+- [License](#license)
+
+## Prerequisites
+
 Before using the project, ensure you have the following installed:
+- Python 3.x
+- pip (Python package manager)
+- Chrome browser (for Selenium-based scraping)
+- A `.env` file with proper credentials for the FCC API.
 
-Python 3.x
-pip (Python package manager)
-Chrome browser (for Selenium-based scraping)
-A .env file with proper credentials for the FCC API.
-Setup and Installation
-Clone the Repository
+## Setup and Installation
 
-bash
-Copiar código
-git clone https://github.com/your_username/property-data-analyzer.git
-cd property-data-analyzer
-Install Dependencies Ensure you have all the required Python packages installed by running:
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/your_username/property-data-analyzer.git
+   cd property-data-analyzer
+   ```
 
-bash
-Copiar código
-pip install -r requirements.txt
-Environment Variables Create a .env file in the root directory with your credentials and API keys. Example:
+2. **Install Dependencies**
+   Ensure you have all the required Python packages installed by running:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-makefile
-Copiar código
-username=<your_fcc_api_username>
-hash_value=<your_fcc_api_hash_value>
-Configuration
-Chrome WebDriver
-Ensure chromedriver is installed and available in your PATH or let webdriver_manager handle the installation automatically.
+3. **Environment Variables**
+   Create a `.env` file in the root directory with your credentials and API keys. Example:
+   ```
+   username=<your_fcc_api_username>
+   hash_value=<your_fcc_api_hash_value>
+   ```
 
-FCC API
-The script uses the FCC API to fetch broadband availability data. You need a username and hash value to access the data, which should be added to the .env file.
+## Configuration
 
-Google Maps API
-The script optionally uses Google Maps API for geocoding. Add your Google API key to the .env file:
+### Chrome WebDriver
+Ensure `chromedriver` is installed and available in your PATH or let `webdriver_manager` handle the installation automatically.
 
-makefile
-Copiar código
+### FCC API
+The script uses the FCC API to fetch broadband availability data. You need a username and hash value to access the data, which should be added to the `.env` file.
+
+### Google Maps API
+The script optionally uses Google Maps API for geocoding. Add your Google API key to the `.env` file:
+```
 google_api_key=<your_google_maps_api_key>
-Usage
-To run the main script:
+```
 
-bash
-Copiar código
+## Usage
+
+To run the main script:
+```bash
 python main.py
+```
 This will execute all the processes in sequence, from downloading broadband data to sending the final CSV via email.
 
-Modules Breakdown
-Download Broadband Data (download_broadband_data): Fetches the most recent broadband data for North Carolina from the FCC API.
+### Modules Breakdown
 
-Extract Property Data (extract_property_data): Scrapes property listings from homes.com based on specific search criteria and saves the data to a CSV file.
+1. **Download Broadband Data** (`download_broadband_data`): Fetches the most recent broadband data for North Carolina from the FCC API.
 
-Geocode Addresses (geocode_addresses): Geocodes the property addresses using either Nominatim (OpenStreetMap) or Google Maps API, adding latitude and longitude to each property.
+2. **Extract Property Data** (`extract_property_data`): Scrapes property listings from `homes.com` based on specific search criteria and saves the data to a CSV file.
 
-Find Internet Providers (find_internet_providers): Matches properties with available internet providers using H3 geospatial indexing and GeoPandas for spatial analysis.
+3. **Geocode Addresses** (`geocode_addresses`): Geocodes the property addresses using either Nominatim (OpenStreetMap) or Google Maps API, adding latitude and longitude to each property.
 
-Find Nearby Amenities (find_nearby_amenities): Uses Overpass API to locate amenities like Starbucks and schools within a specified radius of each property.
+4. **Find Internet Providers** (`find_internet_providers`): Matches properties with available internet providers using H3 geospatial indexing and GeoPandas for spatial analysis.
 
-Send Email (send_email): Sends the final CSV with all the processed data to a specified email address.
+5. **Find Nearby Amenities** (`find_nearby_amenities`): Uses Overpass API to locate amenities like Starbucks and schools within a specified radius of each property.
 
-Notes
-Geocoding Services: The script uses both Nominatim (OpenStreetMap) and Google Maps API for geocoding. Ensure you adhere to the respective API usage policies and rate limits.
-Overpass API: Overpass API is used to fetch nearby amenities. If you encounter rate limits, the script is designed to handle them and retry after a brief wait.
-Selenium Scraping: Since the script relies on web scraping, the scraping logic might need to be updated if homes.com changes its layout or structure.
-Sending Emails: Make sure you use an email service that allows sending emails programmatically through SMTP.
-License
-This project is licensed under the MIT License - see the LICENSE file for details.
+6. **Send Email** (`send_email`): Sends the final CSV with all the processed data to a specified email address.
 
+## Notes
 
+- **Geocoding Services**: The script uses both Nominatim (OpenStreetMap) and Google Maps API for geocoding. Ensure you adhere to the respective API usage policies and rate limits.
+- **Overpass API**: Overpass API is used to fetch nearby amenities. If you encounter rate limits, the script is designed to handle them and retry after a brief wait.
+- **Selenium Scraping**: Since the script relies on web scraping, the scraping logic might need to be updated if `homes.com` changes its layout or structure.
+- **Sending Emails**: Make sure you use an email service that allows sending emails programmatically through SMTP.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
